@@ -1,4 +1,4 @@
-CREATE TABLE people (
+CREATE TABLE person (
     id SERIAL,
     firstname VARCHAR(30) NOT NULL,
     lastname VARCHAR(30) NOT NULL,
