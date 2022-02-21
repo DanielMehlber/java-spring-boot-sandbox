@@ -1,0 +1,8 @@
+# needed to run spring boot jar
+FROM maven
+
+# copy jar into image
+COPY . ./
+
+# run spring boot jar
+ENTRYPOINT ["mvn","verify"]

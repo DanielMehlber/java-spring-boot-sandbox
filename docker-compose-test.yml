@@ -1,0 +1,34 @@
+# This file will wrap the project tree and necessary systems into containers and run integration tests.
+# This approach can be slow, because it will have to download all maven dependencies and plugins each time before running the tests.
+version: "3.9"  # optional since v1.27.0
+services:
+  db:
+    image: mariadb
+    restart: always
+    environment:
+      MYSQL_USER: spring-boot-user
+      MYSQL_PASSWORD: Password123!?
+      MYSQL_DATABASE: PersonDB
+      MYSQL_ROOT_PASSWORD: Password123!?
+    #ports:
+      #- "3305:3306"
+    volumes:
+      - ./src/main/resources/setup.sql:/docker-entrypoint-initdb.d/setup.sql
+    command: --init-file /docker-entrypoint-initdb.d/setup.sql
+    healthcheck:
+      test: [ "CMD", "mysql", "--user=spring-boot-user", "--password=Password123!?", "--execute=SELECT 1" ]
+      interval: 1s
+      timeout: 10s
+      retries: 20
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile-Test
+    ports:
+      - "8080:8080"
+    links:
+      - db
+    depends_on:
+      db:
+        condition: service_healthy
