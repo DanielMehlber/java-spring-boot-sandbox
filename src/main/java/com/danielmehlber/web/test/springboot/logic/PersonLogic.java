@@ -1,6 +1,5 @@
 package com.danielmehlber.web.test.springboot.logic;
 
-import com.danielmehlber.web.test.springboot.Application;
 import com.danielmehlber.web.test.springboot.db.PersonRepository;
 import com.danielmehlber.web.test.springboot.entities.Person;
 import com.danielmehlber.web.test.springboot.exceptions.NoSuchPersonException;

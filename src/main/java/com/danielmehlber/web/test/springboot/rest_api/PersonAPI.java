@@ -3,8 +3,6 @@ package com.danielmehlber.web.test.springboot.rest_api;
 import com.danielmehlber.web.test.springboot.entities.Person;
 import com.danielmehlber.web.test.springboot.exceptions.NoSuchPersonException;
 import com.danielmehlber.web.test.springboot.logic.PersonLogic;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -14,9 +12,10 @@ public class PersonAPI {
 
     @Resource(name="PersonLogic") PersonLogic personLogic;
 
-    @PostMapping("/person/add")
-    public void addPerson(@RequestBody final Person person) {
+    @PostMapping(value = "/person/add", consumes = "application/json")
+    public long addPerson(@RequestBody final Person person) {
         personLogic.addPerson(person);
+        return person.getId();
     }
 
     @GetMapping("/person/id/{id}")
