@@ -70,5 +70,15 @@ class ApplicationTests {
         client.perform(post("/person/add").content(personJson).contentType("application/json"))
                 .andExpect(status().isBadRequest());
     }
+    @Test
+    public void testAddPersonWithInvalidJson() throws Exception {
+        // prepare
+        String personJson = "{'somethingelse': 'somevalue', 'anythingelse': 'else'}";
+
+        // perform
+        client.perform(post("/person/add").content(personJson).contentType("application/json"))
+                .andExpect(status().isBadRequest());
+    }
+
 
 }
